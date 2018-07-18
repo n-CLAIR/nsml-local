@@ -10,6 +10,11 @@ HAS_DATASET = False
 # IS_ON_NSML is True if model is running on nsml server.
 IS_ON_NSML = False
 
+"""
+below functions describe how to communicate nsml server. 
+So, only working correctly on nsml server
+"""
+
 
 def report(summary=False, scope=None, **kwargs):
     """
@@ -238,6 +243,18 @@ def copy(source=None, target=None):
     for more example details, see example 10
     """
     pass
+
+
+def load(iteration, load_fn=None, session=None):
+    """Used to load the model by session name.
+
+    :param iteration: The checkpoin of the model you want to load
+    :param load_fn:  A defined function that loads a saved model. If None, It will call bounded load function (nsml.bind())
+    :param session:  session name you want to load. If None, It is set to the current session name.
+
+    :example:
+        nsml.load(iteration='0', session='KR18712/mnist/1701')
+    """
 
 
 def Visdom(visdom, **kwargs):
