@@ -255,6 +255,7 @@ def load(iteration, load_fn=None, session=None):
     :example:
         nsml.load(iteration='0', session='0000000/mnist/1701')
     """
+    pass
 
 
 def Visdom(visdom, **kwargs):
