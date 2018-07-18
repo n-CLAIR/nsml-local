@@ -253,7 +253,7 @@ def load(iteration, load_fn=None, session=None):
     :param session:  session name you want to load. If None, It is set to the current session name.
 
     :example:
-        nsml.load(iteration='0', session='KR18712/mnist/1701')
+        nsml.load(iteration='0', session='0000000/mnist/1701')
     """
 
 
