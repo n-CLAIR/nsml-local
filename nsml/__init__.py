@@ -115,14 +115,14 @@ def bind(save=None, load=None, infer=None, **kwargs):
     :param kwargs: Used to pass arguments to save or load function. see below
 
     :example:
-        def load(filename):
+        def load(dir_path):
 
-            torch.load(filename)
+            torch.load(dir_path, os.path.join(dir_path, 'model.pth'))
             ...
 
-        def save(filename, **kwargs):
+        def save(dir_path, **kwargs):
             if kwargs[‘real’]:
-                torch.save(object,filename)
+                torch.save(object,os.path.join(dir_path, 'model.pth'))
 
         def infer(data, **kwargs):
             # Defines How to infer using saved objects. It works differently depending on the command (submit, infer)
@@ -172,77 +172,6 @@ def infer(data, **kwargs):
     """
 
     return user_infer(data)
-
-
-def cache(preprocess_fn, **kwargs):
-    """
-    Caching preprocessing data. It caches the output of preprocess_fn.
-
-    :param preprocess_fn:
-        It should be a function that takes a 'output_path' file_name list argument.
-        By default, ['./processed'] is set to output_path, If 'output_path' argument not specified.
-    :param kwargs:
-        arguments pass to ‘preprocess_fn’.
-
-    :example:
-
-        def preprocess(output_path, data):
-            data_set = {
-                'train': _normalize_image(data['train']['data'], data['train']['label'], transform),
-                'test': _normalize_image(data['test']['data'], data['test']['label'], transform)
-            }
-            with open(output_path[0], 'wb') as file:
-                torch.save(data_set, file)
-
-        nsml.cache(preprocess, output_path=['./preprocess.pt'], data=data_loader(DATASET_PATH))
-
-        Then, output_path files([./preprocess.pt]) will be cached.  for more specific details, see example 10
-
-    """
-
-    pass
-
-
-def copy(source=None, target=None):
-    """
-    Used to load call by value objects that saved by pickle.
-    (Dictionary or Class attributes are copied. list type is not supported)
-    make sure source and target types are same before invoking this function.
-
-    :param source: source object
-    :param target: target object
-
-    :example:
-
-        class ClasToSave:
-            def __init___(self):
-                self.elem = 0
-                self.elem2 = 1
-
-        class_to_save=ClassToSave()
-
-
-        def bind_model(model, class_to_save):
-
-            def save(filename, **kwargs):
-                with open(os.path.join(filename, 'class.pkl'), 'wb') as fp:
-                    pickle.dump(class_to_save, fp)
-
-            def load(filename, **kwargs):
-                with open(os.path.join(filename, 'class.pkl, 'rb') as fp:
-                    temp_class = pickle.load(fp)
-                assert type(temp_class) is type(class_to_save)
-                nsml.copy(temp_class, class_to_save)
-            ...
-
-            nsml.bind(save=save, load=load)
-
-        bind_model(model=model, class_to_save=class_to_save)
-
-
-    for more example details, see example 10
-    """
-    pass
 
 
 def load(iteration, load_fn=None, session=None):
