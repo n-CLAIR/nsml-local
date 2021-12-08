@@ -77,12 +77,12 @@ def paused(scope=None):
     pass
 
 
-def save(iteration=None, save_fn=None):
+def save(checkpoint=None, save_fn=None):
     """
     Save the model or optimizer on the storage server.
     passing the object to bind_model() function, It can access that variables and save as a file.
 
-    :param iteration: recognize model’s identity. If None, It is set to the current time.
+    :param checkpoint: recognize model’s identity. If None, It is set to the current time.
 
     :param save_fn: The save function. If None, The function that is bound in nsml.bind() is called.
                     If nothing is defined, the default save function is called.
@@ -92,7 +92,7 @@ def save(iteration=None, save_fn=None):
             torch.save(object, filename)
             print('saved')
 
-        nsml.save(iteration=iteration, save_fn=save)
+        nsml.save(checkpoint=checkpoint, save_fn=save)
 
     """
     pass
@@ -174,15 +174,15 @@ def infer(data, **kwargs):
     return user_infer(data)
 
 
-def load(iteration, load_fn=None, session=None):
+def load(checkpoint, load_fn=None, session=None):
     """Used to load the model by session name.
 
-    :param iteration: The checkpoin of the model you want to load
+    :param checkpoint: The checkpoint of the model you want to load
     :param load_fn:  A defined function that loads a saved model. If None, It will call bounded load function (nsml.bind())
     :param session:  session name you want to load. If None, It is set to the current session name.
 
     :example:
-        nsml.load(iteration='0', session='0000000/mnist/1701')
+        nsml.load(checkpoint='0', session='0000000/mnist/1701')
     """
     pass
 
